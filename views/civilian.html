@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Civilian {{ userId }} </title>
+</head>
+<body data-userId="{{ userId }}">
+    <h1>Hello Civilian {{ userId }}</h1>
+
+    <h4 id="notification">
+        <!-- Some info will be displayed here-->
+    </h4>
+
+    <div id="map">
+        <!-- We will load a map here later-->
+    </div>
+
+    <!--Load JavaScripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src ="https://unpkg.com/axios/dist/axios.min.js" ></script>
+
+    <script type="text/javascript">
+        const socket = io()
+        // Get the user's ID from the HTML tag
+        const userId = document.querySelector("body").getAttribute('data-userId');
+        
+        socket.emit("join",{userId:userId});
+
+        let requestDetails = {};
+        let copDetails = {};
+        let map,marker;
+    </script>
+</body>
+</html>

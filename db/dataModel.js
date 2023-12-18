@@ -7,14 +7,14 @@ const copSchema = mongoose.Schema({
         unique: true,
         trim:true
     },
-    Name:{
+    displayName:{
         type: String,
         trim:true
     },
-    ContactNo:{
+    phone:{
         type : String
     },
-    EmailID:{
+    email:{
         type: String,
         lowercase: true,
         required:true

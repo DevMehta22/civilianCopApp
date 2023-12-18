@@ -15,4 +15,25 @@ router.get('/cops',async(req,res)=>{
                
 })
 
+router.get('/cop.html',(req,res)=>{
+    res.render('cop.html',{
+        userId: req.query.userId
+    });
+})
+
+router.get('/civilian.html',(req,res)=>{
+    res.render('civilian.html',{
+        userId: req.query.userId
+    });
+})
+
+router.get('/cops/info',async(req,res)=>{
+    const userId=req.query.userId;
+    const copDetails = await dbOperations.fetchCopDetails(userId);
+
+    res.json({
+        copDetails: copDetails
+    });
+})
+
 module.exports = router
