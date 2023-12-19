@@ -11,6 +11,9 @@
         <!-- Some info will be displayed here-->
     </h4>
 
+
+    <button onclick="requestForHelp()">Request for help</button>
+
     <div id="map">
         <!-- We will load a map here later-->
     </div>
@@ -29,6 +32,26 @@
         let requestDetails = {};
         let copDetails = {};
         let map,marker;
+
+        requestDetails={
+            civilianId:userId,
+            location:{
+                address: "Indiranagar, Bengaluru, Karnataka 560038, India",
+                latitude: 12.9718915,
+                longitude: 77.64115449999997
+            }
+        }
+
+        function requestForHelp(){
+            socket.emit("request-for-help",requestDetails)
+        }
+
+        socket.on("request-accepted",(eventData)=>{
+            copDetails = eventData;
+            document.getElementById("notification").innerHTML=
+            `${copDetails.displayName} is near ${copDetails.location.address} and will be arriving at your location shortly.\nyou can contact their mobile at ${copDetails.phone}.`
+
+        })
     </script>
 </body>
 </html>

@@ -12,6 +12,7 @@
 
     <h4 id="notification"> Waiting for requests...</h4>
 
+    <button onclick="helpCivilian()">Help Civilian</button>
     <div id="map">
         <!-- We will load a map here later-->
     </div>
@@ -25,7 +26,7 @@
         // Get the user's ID from the HTML tag
         const userId = document.body.getAttribute("data-userId");
         socket.emit("join",{userId:userId});
-        
+
         let requestDetails = {};
         let copDetails = {};
         let map,marker;
@@ -50,9 +51,15 @@
         socket.on('request-for-help',(eventData)=>{
             requestDetails=eventData;
             document.getElementById("notification").innerHTML=
-            `Civilian ${eventData.civilianId} is being attacked and needs help!
-             The location ${requestDetails.location.address}`;
+            `Civilian ${eventData.civilianId} is being attacked and needs help!\n
+             At the location: ${requestDetails.location.address}`;
         })
+        function helpCivilian(){
+            socket.emit('request-accepted',{
+                requestDetails:requestDetails,
+                copDetails:copDetails
+            })
+        }
     </script>
 </body>
 </html>
