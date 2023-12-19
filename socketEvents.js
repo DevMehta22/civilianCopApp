@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 function initialize(server){
     const io = require('socket.io')(server);
-
+    //socket connection setup
     io.on('connection',(socket)=>{
         console.log("A user connected");
         socket.on('join',(data)=>{
