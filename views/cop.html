@@ -23,30 +23,28 @@
     <script type="text/javascript">
         const socket = io()
         // Get the user's ID from the HTML tag
-        try{const userId = document.body.getAttribute("data-userId");
-        
+        const userId = document.body.getAttribute("data-userId");
         socket.emit("join",{userId:userId});
-        }catch(err){
-            console.log(err.message);
-        }
-
+        
         let requestDetails = {};
         let copDetails = {};
         let map,marker;
 
-        axios.get(`/cops/info?userId=${userId}`)
-        .then((response) => {
-            copDetails = response.data.copDetails;
-            copDetails.location = {
-                address: copDetails.location.address,
-                longitude: copDetails.location.coordinates[0],
-                latitude: copDetails.location.coordinates[1],
-                }
-            document.getElementById("copDetails").innerHTML=
-            `Name:${copDetails.displayName}
-             Address:${copDetails.location.address}`;
-        }).catch((err)=>{
-            console.log(err);
+        document.addEventListener('DOMContentLoaded', function () {
+            axios.get(`/cops/info?userId=${userId}`)
+            .then((response) => {
+                copDetails = response.data.copDetails;
+                copDetails.location = {
+                    address: copDetails.location.address,
+                    longitude: copDetails.location.coordinates[0],
+                    latitude: copDetails.location.coordinates[1],
+                    }
+                document.getElementById("copDetails").innerHTML=
+                `Name:${copDetails.displayName}
+                 Address:${copDetails.location.address}`;
+            }).catch((err)=>{
+                console.log(err);
+            });
         });
         
         socket.on('request-for-help',(eventData)=>{
